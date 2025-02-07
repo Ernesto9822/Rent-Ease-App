@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile - RentEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">RentEase</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="flatPage.html">All Flats</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home.html">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="profile.html">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Update Form -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4">
+                    <h2 class="text-center text-primary mb-4">Update Your Profile</h2>
+                    <form id="profile-form">
+                        <div class="mb-3">
+                            <label for="first-name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="last-name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="birth-date" class="form-label">Birth Date</label>
+                            <input type="date" class="form-control" id="birth-date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-primary text-white text-center p-3 mt-5">
+        <p>&copy; 2025 RentEase. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load user data from localStorage
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('first-name').value = currentUser.firstName;
+            document.getElementById('last-name').value = currentUser.lastName;
+            document.getElementById('email').value = currentUser.email;
+            document.getElementById('birth-date').value = currentUser.birthDate;
+            document.getElementById('password').value = currentUser.password;
+        }
+
+        document.getElementById('profile-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            currentUser.firstName = document.getElementById('first-name').value;
+            currentUser.lastName = document.getElementById('last-name').value;
+            currentUser.email = document.getElementById('email').value;
+            currentUser.birthDate = document.getElementById('birth-date').value;
+            currentUser.password = document.getElementById('password').value;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            alert('Profile updated successfully!');
+            window.location.href = 'index.html';
+        });
+
+        document.getElementById('logout').addEventListener('click', function() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
